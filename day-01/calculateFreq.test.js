@@ -1,4 +1,8 @@
-const { calculateFreq, getIntArray } = require('./calculateFreq');
+const {
+  calculateFreq,
+  getIntArray,
+  findFirstDuplicate,
+} = require('./calculateFreq');
 
 const testValues = `+3
 -5
@@ -22,4 +26,14 @@ describe('Test frequency calculation', () => {
   test('Adds all elements', () => {
     expect(calculateFreq(intArray)).toBe(11);
   });
+});
+
+test.each`
+  valuesArray             | expected
+  ${[+1, -1]}             | ${0}
+  ${[+3, +3, +4, -2, -4]} | ${10}
+  ${[-6, +3, +8, +5, -6]} | ${5}
+  ${[+7, +7, -2, -7, -4]} | ${14}
+`('Find first duplicate frequency', ({ valuesArray, expected }) => {
+  expect(findFirstDuplicate(valuesArray)).toBe(expected);
 });
