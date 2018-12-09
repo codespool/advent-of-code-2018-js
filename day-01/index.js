@@ -1,4 +1,4 @@
-const fs = require('fs');
+const data = require('../lib/dataLoader')(`${__dirname}/data.txt`);
 
 const {
   calculateFreq,
@@ -6,9 +6,6 @@ const {
   findFirstDuplicate,
 } = require('./calculateFreq');
 
-const rawData = fs.readFileSync(`${__dirname}/data.txt`, {
-  encoding: 'utf-8',
-});
-const intArray = getIntArray(rawData);
+const intArray = getIntArray(data);
 console.log(calculateFreq(intArray));
 console.log(findFirstDuplicate(intArray));
