@@ -1,6 +1,6 @@
-const { findChecksum } = require('./findChecksum');
+const { findChecksum, findCommonLetters } = require('./findChecksum');
 
-const testValues = [
+const checksumTestValues = [
   'abcdef',
   'bababc',
   'abbcde',
@@ -10,9 +10,20 @@ const testValues = [
   'ababab',
 ];
 
-const testResult = 12;
+const commonLettersTestValues = [
+  'abcde',
+  'fghij',
+  'klmno',
+  'pqrst',
+  'fguij',
+  'axcye',
+  'wvxyz',
+];
 
 describe('Test day 02', () => {
   test('Test finding checksum', () =>
-    expect(findChecksum(testValues)).toBe(testResult));
+    expect(findChecksum(checksumTestValues)).toBe(12));
+
+  test('Test finding common letters', () =>
+    expect(findCommonLetters(commonLettersTestValues)).toBe('fgij'));
 });
