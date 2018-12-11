@@ -28,6 +28,35 @@ function findChecksum(stringList) {
   return pairsCount * tripletsCount;
 }
 
+function findCommonLetters(stringList, currentIndex = 0) {
+  const currentWord = stringList[currentIndex].split('');
+  for (
+    let wordIndex = currentIndex + 1, max = stringList.length;
+    wordIndex < max;
+    wordIndex += 1
+  ) {
+    let mismatchCount = 0;
+    let mismatchIndex = null;
+    for (
+      let letterIndex = 0, jMax = currentWord.length;
+      letterIndex < jMax;
+      letterIndex += 1
+    ) {
+      if (currentWord[letterIndex] !== stringList[wordIndex][letterIndex]) {
+        mismatchCount += 1;
+        mismatchIndex = letterIndex;
+        if (mismatchCount > 1) break;
+      }
+    }
+    if (mismatchCount === 1) {
+      currentWord.splice(mismatchIndex, 1);
+      return currentWord.join('');
+    }
+  }
+  return findCommonLetters(stringList, currentIndex + 1);
+}
+
 module.exports = {
   findChecksum,
+  findCommonLetters,
 };
