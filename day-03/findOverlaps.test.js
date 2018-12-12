@@ -6,6 +6,6 @@ const testString = `#1 @ 1,3: 4x4
 
 describe('Testing day-03', () => {
   test('Getting correct amount of overlaps', () => {
-    expect(findOverlaps(testString)).toBe(4);
+    expect(findOverlaps(testString)).toEqual([4, 3]);
   });
 });

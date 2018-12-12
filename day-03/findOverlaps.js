@@ -1,5 +1,6 @@
 function findOverlaps(areasList) {
   const field = [];
+  const notOverwritten = {};
   areasList.forEach(area => {
     // extract all the variables from the string
     const [id, [[x, y], [width, height]]] = area
@@ -23,17 +24,32 @@ function findOverlaps(areasList) {
           field[i] = [];
         }
         if (field[i][j] === undefined) {
-          field[i][j] = 0;
+          field[i][j] = { usageCount: 0, claimedBy: id };
+          // only if id field is written to for the first time, and id is used for the first time
+          if (notOverwritten[id] === undefined) {
+            notOverwritten[id] = true;
+          }
         } else {
-          field[i][j] += 1;
+          // clear both ids using the same field
+          notOverwritten[id] = false;
+          notOverwritten[field[i][j].claimedBy] = false;
+          field[i][j].usageCount += 1;
+          field[i][j].claimedBy = id;
         }
       }
     }
   });
-  // flatten the 2d array and count all fields with value > 0
-  return field
-    .reduce((flatted, current) => flatted.concat(current), [])
-    .reduce((sum, current) => sum + (current ? 1 : 0), 0);
+  const uniqueId = parseInt(
+    Object.entries(notOverwritten).find(([key, value]) => value)[0],
+    10
+  );
+
+  return [
+    field
+      .reduce((flatted, current) => flatted.concat(current), [])
+      .reduce((sum, current) => sum + (current.usageCount ? 1 : 0), 0),
+    uniqueId,
+  ];
 }
 
 module.exports = {
